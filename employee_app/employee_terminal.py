@@ -8,7 +8,7 @@ from datetime import datetime
 from prettytable import PrettyTable
 
 #BASE_URL = "http://100.84.247.62:8080"
-BASE_URL = "http://127.0.0.1:8080"
+BASE_URL = "http://127.0.0.1:7070"
 
 def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
