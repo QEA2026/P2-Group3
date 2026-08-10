@@ -37,7 +37,7 @@ pipeline {
             steps {
                 sh '''
                     until docker compose exec -T employee-backend \
-                        curl -sf http://frontend:5173; do
+                        python -c "import urllib.request; urllib.request.urlopen('http://frontend:5173')"
                         echo "Waiting for frontend..."
                         sleep 2
                     done
