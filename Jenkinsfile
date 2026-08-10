@@ -19,7 +19,8 @@ pipeline {
             steps {
                 sh 'docker compose up -d'
                 sh '''
-                    until curl -sf http://selenium:4444/status; do
+                    until docker exec $(docker compose ps -q selenium) \
+                        curl -sf http://localhost:4444/status; do
                         echo "Waiting for Selenium..."
                         sleep 2
                     done
