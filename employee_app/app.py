@@ -175,4 +175,4 @@ def handle_get_non_pending_user_expenses(user_id):
     return jsonify([e.__dict__ for e in history_expenses]), 200
 
 if __name__ == "__main__": # pragma: no cover
-    app.run(host='0.0.0.0', port=8080, debug=False)
+    app.run(host='0.0.0.0', port=7070, debug=False)
