@@ -11,7 +11,7 @@ services:
   employee-backend:
     build: ./employee_app
     ports:
-      - "8080:8080"
+      - "7070:7070"
     volumes:
       - "sqlite_data:/var/data"
     environment:
@@ -29,10 +29,10 @@ services:
       CONTAINER: "DOCKER"
 
   jenkins:
-    image: jenkins/jenkins:lts-jdk17
+    build: ./Jenkins
     user: root
     ports:
-      - "7070:8080"
+      - "8080:8080"
       - "50000:50000"
     volumes:
       - jenkins_home:/var/jenkins_home
