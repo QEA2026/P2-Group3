@@ -35,6 +35,6 @@ services:
     platform: linux/amd64
     ports:
       - "4444:4444"
-
+      
 volumes:
   sqlite_data:
