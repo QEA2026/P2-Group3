@@ -25,7 +25,7 @@ pipeline {
             steps {
                 sh 'docker compose exec -T employee-backend pytest'
                 dir('employee_app/e2e'){
-                    sh 'behave'
+                    sh 'docker compose exec -T employee-backend behave'
                 }
                 sh 'docker compose exec -T manager-backend pytest'
             }
