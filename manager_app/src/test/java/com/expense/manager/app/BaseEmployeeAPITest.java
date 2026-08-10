@@ -24,19 +24,19 @@ public abstract class BaseEmployeeAPITest {
     static void initializeUsers() {
         // create a new test employee and test manager
         String testEmployeeBody = """
-				{
-				    "username": "test employee",
-				    "password": "password123",
-				    "role": "Employee"
-				}
-				""";
+                {
+                    "username": "test employee",
+                    "password": "password123",
+                    "role": "Employee"
+                }
+                """;
         String testManagerBody = """
-				{
-				    "username": "test manager",
-				    "password": "password456",
-				    "role": "Manager"
-				}
-				""";
+                {
+                    "username": "test manager",
+                    "password": "password456",
+                    "role": "Manager"
+                }
+                """;
 
         TEST_EMPLOYEE = given()
                 .contentType(ContentType.JSON)
@@ -88,16 +88,17 @@ public abstract class BaseEmployeeAPITest {
         }
         dirtyExpenses = new ArrayList<>();
     }
+
     static Expense postTestExpense() {
 
         String expenseRequestBody = """
-				{
-					"user_id": %d,
-					"amount": 999.99,
-					"description": "test expense",
-					"date": "2026-06-01"
-				}
-				""";
+                {
+                	"user_id": %d,
+                	"amount": 999.99,
+                	"description": "test expense",
+                	"date": "2026-06-01"
+                }
+                """;
         expenseRequestBody = String.format(expenseRequestBody, TEST_EMPLOYEE.getId());
 
         Expense retExpense = given()
@@ -123,14 +124,14 @@ public abstract class BaseEmployeeAPITest {
      */
     static Approval postTestApproval(int expenseId, String status) {
         String approvalRequestBody = """
-				{
-					"expense_id": %d,
-					"status": "%s",
-					"reviewer": %d,
-					"comment": "test approval comment",
-					"review_date": "2026-06-02"
-				}
-				""";
+                {
+                	"expense_id": %d,
+                	"status": "%s",
+                	"reviewer": %d,
+                	"comment": "test approval comment",
+                	"review_date": "2026-06-02"
+                }
+                """;
         approvalRequestBody = String.format(approvalRequestBody, expenseId, status, TEST_MANAGER.getId());
         Approval newApproval = given()
                 .contentType(ContentType.JSON)
@@ -168,7 +169,7 @@ public abstract class BaseEmployeeAPITest {
 
     @BeforeAll
     static void setup() {
-        RestAssured.baseURI = "http://127.0.0.1:8080"; // change this when URI changes!
+        RestAssured.baseURI = "http://127.0.0.1:7070"; // change this when URI changes!
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
 
         dirtyExpenses = new ArrayList<>();

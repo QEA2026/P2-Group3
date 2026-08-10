@@ -14,7 +14,7 @@ import java.util.Map;
 import static io.restassured.RestAssured.given;
 
 public class EmployeeRequests {
-    private static final String employeeURI = "http://127.0.0.1:8080";
+    private static final String employeeURI = "http://127.0.0.1:7070";
     private List<Expense> dirtyExpenses;
     private List<Approval> dirtyApprovals;
     private final User manager;
@@ -30,21 +30,21 @@ public class EmployeeRequests {
     public boolean health() {
         given()
                 .when()
-                .get(employeeURI +"/health")
+                .get(employeeURI + "/health")
                 .then()
                 .statusCode(200);
         return true;
     }
 
     public void clearAll() {
-        for (Expense expense: this.dirtyExpenses) {
+        for (Expense expense : this.dirtyExpenses) {
             given()
                     .when()
                     .delete(employeeURI + "/expenses/" + expense.getId())
                     .then()
                     .statusCode(201);
         }
-        for (Approval approval: this.dirtyApprovals) {
+        for (Approval approval : this.dirtyApprovals) {
             given()
                     .when()
                     .delete(employeeURI + "/approvals/" + approval.getId())
@@ -57,14 +57,15 @@ public class EmployeeRequests {
 
     public Expense submitExpense(@NonNull Expense expense, String status) {
         String requestBodyExpense = """
-				{
-					"user_id": %d,
-					"amount": %f,
-					"description": "%s",
-					"date": "%s"
-				}
-				""";
-        requestBodyExpense = String.format(requestBodyExpense, expense.getUser_id(), expense.getAmount(), expense.getDescription(), expense.getDate());
+                {
+                	"user_id": %d,
+                	"amount": %f,
+                	"description": "%s",
+                	"date": "%s"
+                }
+                """;
+        requestBodyExpense = String.format(requestBodyExpense, expense.getUser_id(), expense.getAmount(),
+                expense.getDescription(), expense.getDate());
         Expense newExpense = given()
                 .contentType(ContentType.JSON)
                 .body(requestBodyExpense)
