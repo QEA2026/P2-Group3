@@ -1,11 +1,10 @@
 import os
-import subprocess
-import sys
 import time
 
 from selenium import webdriver
 
-BASE_URL = "http://localhost:5173"
+BASE_URL = os.environ.get("BASE_URL", "http://localhost:5173")
+SELENIUM_URL = os.environ.get("SELENIUM_URL")
 SLOW_MO = float(os.environ.get("SLOW_MO", "0"))
 
 FEATURES_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -17,7 +16,12 @@ DB_FILE = os.path.join(REPO_ROOT, "expenses_system_db.db")
 
 def before_all(context):
     context.base_url = BASE_URL
-    context.driver = webdriver.Chrome()
+
+    if SELENIUM_URL:
+        context.driver = webdriver.Remote(command_executor=SELENIUM_URL)
+    else:
+        context.driver = webdriver.Chrome()
+
     context.driver.implicitly_wait(5)
 
 
