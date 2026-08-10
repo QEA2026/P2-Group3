@@ -21,7 +21,7 @@ pipeline {
             }
         }
 
-        Stage('Wait for Selenium') {
+        stage('Wait for Selenium') {
             steps {
                 sh '''
                     until docker exec $(docker compose ps -q selenium) \
