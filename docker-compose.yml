@@ -13,9 +13,9 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - "sqlite_data:/var/lib/sqlite/data"
+      - "sqlite_data:/var/data"
     environment:
-      DATABASE_URL: "/var/lib/sqlite/data/expenses_system_db.db"
+      DATABASE_URL: "/var/data/expenses_system_db.db"
       CONTAINER: "DOCKER"
 
   manager-backend:
@@ -23,10 +23,21 @@ services:
     ports:
       - "9090:9090"
     volumes:
-      - "sqlite_data:/var/lib/sqlite/data"
+      - "sqlite_data:/var/data"
     environment:
-      DATABASE_URL: "/var/lib/sqlite/data/expenses_system_db.db"
+      DATABASE_URL: "/var/data/expenses_system_db.db"
       CONTAINER: "DOCKER"
+
+  jenkins:
+    image: jenkins/jenkins:lts-jdk17
+    user: root
+    ports:
+      - "7070:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
 
 volumes:
   sqlite_data:
+  jenkins_home:

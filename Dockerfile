@@ -2,7 +2,7 @@ FROM alpine:latest
 
 # RUN apk update && apk add sqlite
 
-WORKDIR /var/lib/sqlite/data/
+WORKDIR /var/data
 
 COPY expenses_system_db.db .
 
