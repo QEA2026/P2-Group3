@@ -10,5 +10,7 @@ RUN mvn clean package -DskipTests
 FROM maven:3.8-openjdk-17
 WORKDIR /manager_app
 COPY --from=build /manager_app/target/*.jar app.jar
+COPY pom.xml .
+COPY src ./src
 EXPOSE 9090
 ENTRYPOINT ["java", "-jar", "app.jar"]
