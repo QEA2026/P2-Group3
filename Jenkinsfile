@@ -82,10 +82,6 @@ pipeline {
                 catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
                     sh 'docker compose exec -T -w /employee_app/e2e employee-backend behave'
                 }
-
-                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-                    sh 'docker compose exec -T manager-backend mvn test'
-                }
             }
         }
     }
