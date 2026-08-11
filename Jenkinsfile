@@ -21,6 +21,32 @@ pipeline {
             }
         }
 
+        stage('Wait for Employee Backend') {
+            steps {
+                sh '''
+                    until docker compose exec -T employee-backend \
+                        python -c "import urllib.request; urllib.request.urlopen('http://localhost:7070/users')"; do
+                        echo "Waiting for employee-backend API..."
+                        sleep 2
+                    done
+                    echo "Employee-backend ready!"
+                '''
+            }
+        }
+
+        stage('Wait for Manager Backend') {
+            steps {
+                sh '''
+                    until docker compose exec -T manager-backend \
+                        curl -sf http://localhost:9090/health; do
+                        echo "Waiting for manager-backend..."
+                        sleep 3
+                    done
+                    echo "Manager-backend ready!"
+                '''
+            }
+        }
+
         stage('Wait for Selenium') {
             steps {
                 sh '''

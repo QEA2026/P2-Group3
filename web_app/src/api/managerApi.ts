@@ -6,7 +6,9 @@ import type {
   Approval,
 } from '../types/models';
 
-const BASE_URL = import.meta.env.VITE_MANAGER_API_URL || 'http://localhost:9090';
+const isLocal = window.location.hostname === 'localhost';
+const BASE_URL = isLocal ? 'http://localhost:9090' : import.meta.env.VITE_MANAGER_API_URL;
+
 
 export const managerApi = {
   // ====================
