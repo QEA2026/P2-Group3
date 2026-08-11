@@ -14,6 +14,13 @@ REPO_ROOT = os.path.dirname(EMPLOYEE_APP_DIR)
 DB_DIR = os.path.join(EMPLOYEE_APP_DIR, "db")
 DB_FILE = os.path.join(REPO_ROOT, "expenses_system_db.db")
 
+import logging
+
+# Add at the top of conftest.py
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
 
 def before_all(context):
     context.base_url = BASE_URL
@@ -21,6 +28,12 @@ def before_all(context):
     options = Options()
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
+
+    # Enable browser and performance logging for debugging
+    options.set_capability("goog:loggingPrefs", {
+        "browser": "ALL",
+        "performance": "ALL"
+    })
 
     if SELENIUM_URL:
         context.driver = webdriver.Remote(

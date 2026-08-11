@@ -80,7 +80,7 @@ pipeline {
                 }
 
                 catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-                    sh 'docker compose exec -T -w /employee_app/e2e employee-backend behave'
+                    sh 'docker compose exec -T -w /employee_app/e2e employee-backend bash -c "PYTHONUNBUFFERED=1 behave --no-capture"'
                 }
             }
         }
