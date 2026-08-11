@@ -49,7 +49,7 @@ pipeline {
 
         stage('Tests') {
             steps {
-                sh 'docker compose exec -T employee-backend curl http://employee-backend:7070/users'
+                sh '''docker compose exec -T employee-backend python3 -c "import urllib.request; print(urllib.request.urlopen('http://employee-backend:7070/users').read().decode())"'''
                 catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
                     sh 'docker compose exec -T employee-backend pytest'
                 }
@@ -68,6 +68,7 @@ pipeline {
     post {
         always {
             sh 'docker compose down -v --remove-orphans'
+            sh 'docker image prune -af'
         }
     }
 }
