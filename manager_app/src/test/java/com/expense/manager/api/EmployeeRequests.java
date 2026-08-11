@@ -14,7 +14,12 @@ import java.util.Map;
 import static io.restassured.RestAssured.given;
 
 public class EmployeeRequests {
-    private static final String employeeURI = "http://127.0.0.1:8080";
+
+    private static String getEnvOrDefault(String key, String defaultValue) {
+        String value = System.getenv(key);
+        return value != null ? value : defaultValue;
+    }
+    private static final String employeeURI = getEnvOrDefault("BASE_URL", "http://127.0.0.1:8080");
     private List<Expense> dirtyExpenses;
     private List<Approval> dirtyApprovals;
     private final User manager;
