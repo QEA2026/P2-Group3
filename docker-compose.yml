@@ -31,10 +31,11 @@ services:
       CONTAINER: "DOCKER"
   
   selenium:
-    image: selenium/standalone-chrome
+    image: seleniarm/standalone-chromium
     shm_size: "2gb"
     ports:
       - "4444:4444"
+      - "7900:7900"
 
 volumes:
   sqlite_data:
