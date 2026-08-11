@@ -21,18 +21,18 @@ pipeline {
             }
         }
 
-        stage('Wait for Selenium') {
-            steps {
-                sh '''
-                    apt-get -y update; apt-get -y install curl
-                    until docker exec $(docker compose ps -q selenium) \
-                        curl -sf http://selenium:4444/status; do
-                        echo "Waiting for Selenium..."
-                        sleep 2
-                    done
-                '''
-            }
-        }
+        // stage('Wait for Selenium') {
+        //     steps {
+        //         sh '''
+        //             apt-get -y update; apt-get -y install curl
+        //             until docker exec $(docker compose ps -q selenium) \
+        //                 curl -sf http://selenium:4444/status; do
+        //                 echo "Waiting for Selenium..."
+        //                 sleep 2
+        //             done
+        //         '''
+        //     }
+        // }
 
         stage('Wait for Frontend') {
             steps {
