@@ -19,7 +19,7 @@ public class EmployeeRequests {
         String value = System.getenv(key);
         return value != null ? value : defaultValue;
     }
-    private static final String employeeURI = getEnvOrDefault("BASE_URL", "http://127.0.0.1:8080");
+    private static final String employeeURI = getEnvOrDefault("EMPLOYEE_URL", "http://127.0.0.1:7070");
     private List<Expense> dirtyExpenses;
     private List<Approval> dirtyApprovals;
     private final User manager;
