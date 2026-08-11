@@ -42,7 +42,7 @@ public class ManagerExpenseAPITest {
                 .contentType(ContentType.JSON)
                 .body(employeeRequestBody)
                 .when()
-                .post("http://127.0.0.1:9090/users")
+                .post("/users")
                 .then()
                 .statusCode(200)
                 .extract()
@@ -51,7 +51,7 @@ public class ManagerExpenseAPITest {
                 .contentType(ContentType.JSON)
                 .body(managerRequestBody)
                 .when()
-                .post("http://127.0.0.1:9090/users")
+                .post("/users")
                 .then()
                 .statusCode(200)
                 .extract()
@@ -62,7 +62,7 @@ public class ManagerExpenseAPITest {
         for (User user: List.of(TEST_EMPLOYEE, TEST_MANAGER)) {
             given()
                     .when()
-                    .delete("http://127.0.0.1:9090/users/" + user.getId())
+                    .delete("/users/" + user.getId())
                     .then()
                     .statusCode(200);
         }
@@ -72,7 +72,9 @@ public class ManagerExpenseAPITest {
 
     @BeforeAll
     static void setUp() {
-        RestAssured.baseURI = "http://127.0.0.1:9090/expenses";
+        RestAssured.baseURI = System.getenv("MANAGER_URL") != null 
+        ? System.getenv("MANAGER_URL") 
+        : "http://127.0.0.1:9090";
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
         initializeTestUsers();
         employeeRequests = new EmployeeRequests(TEST_MANAGER);

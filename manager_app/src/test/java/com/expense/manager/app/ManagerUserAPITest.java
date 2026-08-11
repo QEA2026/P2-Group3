@@ -37,7 +37,9 @@ public class ManagerUserAPITest {
 
     @BeforeAll
     static void setUp() {
-        RestAssured.baseURI = "http://127.0.0.1:9090/users"; // change this when URI changes!
+        RestAssured.baseURI = System.getenv("MANAGER_URL") != null 
+        ? System.getenv("MANAGER_URL") + "/users"
+        : "http://127.0.0.1:9090/users"; // change this when URI changes!
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
         dirtyUsers = new ArrayList<>();
     }
