@@ -115,7 +115,7 @@ public class EmployeeRequests {
         try {
             return given()
                     .when()
-                    .get("/approvals/" + approvalId)
+                    .get(employeeURI + "/approvals/" + approvalId)
                     .then()
                     .extract()
                     .as(Approval.class);
