@@ -58,7 +58,7 @@ pipeline {
                 }
 
                 catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-                    sh 'docker compose exec -T manager-backend pytest'
+                    sh 'docker compose exec -T manager-backend mvn test'
                 }
             }
         }
