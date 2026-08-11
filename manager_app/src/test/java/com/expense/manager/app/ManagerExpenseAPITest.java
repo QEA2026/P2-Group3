@@ -73,8 +73,8 @@ public class ManagerExpenseAPITest {
     @BeforeAll
     static void setUp() {
         RestAssured.baseURI = System.getenv("MANAGER_URL") != null 
-        ? System.getenv("MANAGER_URL") 
-        : "http://127.0.0.1:9090";
+        ? System.getenv("MANAGER_URL") + "/expenses"
+        : "http://127.0.0.1:9090/expenses";
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
         initializeTestUsers();
         employeeRequests = new EmployeeRequests(TEST_MANAGER);
