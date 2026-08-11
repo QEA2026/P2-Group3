@@ -58,12 +58,9 @@ pipeline {
                     sh 'docker compose exec -T -w /employee_app/e2e employee-backend behave'
                 }
 
-                sh 'echo "[debug] current directory:"'
-                sh 'pwd'
-                sh 'echo "[debug] files in current directory"'
-                sh 'ls'
+                sh 'echo "Manager Backend Unit Tests"'
                 catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-                    sh 'docker compose exec -T manager-backend mvn test'
+                    sh 'docker compose exec -T manager-backend mvn test -f /manager_app/pom.xml -Dtest="com.expense.manager.unit.*.*Test'
                 }
             }
         }
