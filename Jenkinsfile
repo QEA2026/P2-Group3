@@ -49,6 +49,7 @@ pipeline {
 
         stage('Tests') {
             steps {
+                sh 'docker compose exec -T employee-backend curl http://employee-backend:7070/users'
                 catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
                     sh 'docker compose exec -T employee-backend pytest'
                 }
