@@ -33,6 +33,7 @@ services:
       DATABASE_URL: "/var/data/expenses_system_db.db"
       CONTAINER: "DOCKER"
       EMPLOYEE_URL: "http://employee-backend:7070"
+      MANAGER_URL: "http://manager-backend:9090"
       BASE_URL: "http://frontend:5173"
   
   selenium:
