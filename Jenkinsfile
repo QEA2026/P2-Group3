@@ -34,11 +34,12 @@ pipeline {
         //     }
         // }
 
+        // temporarily, the url is localhost. don't keep it like this.
         stage('Wait for Frontend') {
             steps {
                 sh '''
                     until docker compose exec -T employee-backend \
-                        python -c "import urllib.request; urllib.request.urlopen('http://frontend:5173')"; do
+                        python -c "import urllib.request; urllib.request.urlopen('http://localhost:5173')"; do
                         
                         echo "Waiting for frontend..."
                         sleep 2
