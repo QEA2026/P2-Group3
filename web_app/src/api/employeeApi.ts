@@ -6,7 +6,7 @@ import type {
   Approval,
 } from '../types/models';
 
-const BASE_URL = 'http://localhost:7070';
+const BASE_URL = import.meta.env.VITE_EMPLOYEE_API_URL || 'http://localhost:7070';
 
 export const employeeApi = {
   register: async (

@@ -7,6 +7,9 @@ services:
     build: ./web_app
     ports:
       - "5173:5173"
+    environment:
+      VITE_EMPLOYEE_API_URL: "http://employee-backend:7070"
+      VITE_MANAGER_API_URL: "http://manager-backend:9090"
 
   employee-backend:
     build: ./employee_app
