@@ -2,10 +2,13 @@ package com.expense.manager.e2e.hooks;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
@@ -15,7 +18,7 @@ public class Hooks {
     public static WebDriver driver;
 
     @Before(order = 0)
-    public void setup() {
+    public void setup() throws MalformedURLException {
         ChromeOptions options = new ChromeOptions();
 
         Map<String, Object> prefs = new HashMap<>();
@@ -28,8 +31,17 @@ public class Hooks {
             "--disable-features=PasswordLeakDetection,PasswordManagerOnboarding,PasswordManagerRedesign"
         );
 
-        driver = new ChromeDriver(options);
-        driver.manage().window().maximize();
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+
+        String seleniumUrl = System.getenv("SELENIUM_URL");
+
+        if (seleniumUrl != null && !seleniumUrl.isBlank()) {
+            driver = new RemoteWebDriver(new URL(seleniumUrl), options);
+        } else {
+            driver = new ChromeDriver(options);
+            driver.manage().window().maximize();
+        }
     }
 
     @After(order = 0)
