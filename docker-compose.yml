@@ -37,7 +37,7 @@ services:
       BASE_URL: "http://frontend:5173"
   
   selenium:
-    image: seleniarm/standalone-chromium
+    image: selenium/standalone-chromium:latest
     shm_size: "2gb"
     ports:
       - "4444:4444"
