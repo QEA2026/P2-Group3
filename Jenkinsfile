@@ -34,19 +34,19 @@ pipeline {
             }
         }
 
-        // stage('Wait for Frontend') {
-        //     steps {
-        //         sh '''
-        //             until docker compose exec -T employee-backend \
-        //                 python -c "import urllib.request; urllib.request.urlopen('http://frontend:5173')"; do
+        stage('Wait for Frontend') {
+            steps {
+                sh '''
+                    until docker compose exec -T employee-backend \
+                        python -c "import urllib.request; urllib.request.urlopen('http://frontend:5173')"; do
                         
-        //                 echo "Waiting for frontend..."
-        //                 sleep 2
-        //             done
-        //             echo "Frontend is ready!"
-        //         '''
-        //     }
-        // }
+                        echo "Waiting for frontend..."
+                        sleep 2
+                    done
+                    echo "Frontend is ready!"
+                '''
+            }
+        }
 
         stage('Manager Backend Unit Tests') {
             steps {
