@@ -35,6 +35,7 @@ services:
       EMPLOYEE_URL: "http://employee-backend:7070"
       MANAGER_URL: "http://manager-backend:9090"
       BASE_URL: "http://frontend:5173"
+      SELENIUM_URL: "http://selenium:4444/wd/hub"
   
   selenium:
     image: selenium/standalone-chromium:latest
