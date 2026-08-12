@@ -79,8 +79,9 @@ public class LoginSteps {
 
             assertEquals("Username or password not valid.", error.getText());
 
-            // Optional: verify failed login stays on login page
-            assertTrue(driver.getCurrentUrl().equals(LOGIN_URL));
+            String currentUrl = driver.getCurrentUrl().replaceAll("/+$", "");
+            String expectedUrl = LOGIN_URL.replaceAll("/+$", "");
+            assertEquals(expectedUrl, currentUrl, "Expected to remain on the login page after a failed login");
         }
     }
 }
