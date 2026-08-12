@@ -33,6 +33,7 @@ public class Hooks {
 
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
+        options.setEnableDownloads(true);
 
         String seleniumUrl = System.getenv("SELENIUM_URL");
 
