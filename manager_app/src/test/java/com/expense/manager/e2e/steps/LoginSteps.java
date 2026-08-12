@@ -26,7 +26,7 @@ public class LoginSteps {
         return value != null ? value : defaultValue;
     }
     private WebDriver driver;
-    private static final String LOGIN_URL = getEnvOrDefault("BASE_URL", "http://localhost:5173/LOL");
+    private static final String LOGIN_URL = getEnvOrDefault("BASE_URL", "http://localhost:5173");
     private LoginPage loginPage;
 
     @Before(order = 1)

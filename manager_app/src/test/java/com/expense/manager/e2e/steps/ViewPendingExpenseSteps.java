@@ -20,8 +20,12 @@ import io.cucumber.java.en.When;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 public class ViewPendingExpenseSteps {
+    private static String getEnvOrDefault(String key, String defaultValue) {
+        String value = System.getenv(key);
+        return value != null ? value : defaultValue;
+    }
     private WebDriver driver;
-    private static final String LOGIN_URL = "http://localhost:5173/";
+    private static final String LOGIN_URL = getEnvOrDefault("BASE_URL", "http://localhost:5173");
     private LoginPage loginPage;
     private EmployeeDashboardPage employeeDashboardPage;
     private SubmitExpensePage submitExpensePage;
