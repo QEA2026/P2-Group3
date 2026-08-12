@@ -72,9 +72,9 @@ public class ManagerExpenseAPITest {
 
     @BeforeAll
     static void setUp() {
-        RestAssured.baseURI = System.getenv("MANAGER_URL") != null 
-        ? System.getenv("MANAGER_URL") + "/expenses"
-        : "http://127.0.0.1:9090/expenses";
+        RestAssured.baseURI = System.getenv("MANAGER_URL") != null
+        ? System.getenv("MANAGER_URL")
+        : "http://127.0.0.1:9090";
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
         initializeTestUsers();
         employeeRequests = new EmployeeRequests(TEST_MANAGER);
@@ -97,7 +97,7 @@ public class ManagerExpenseAPITest {
     void get_expenses_ReturnsEverything() {
         assertDoesNotThrow(() -> {
             List<Expense> expenses = given()
-                    .get()
+                    .get("/expenses")
                     .then()
                     .statusCode(200)
                     .extract().response().jsonPath().getList("$", Expense.class);
@@ -115,7 +115,7 @@ public class ManagerExpenseAPITest {
         );
         Expense actualExpense = given()
                 .when()
-                .get("/" + expectedExpense.getId())
+                .get("/expenses/" + expectedExpense.getId())
                 .then()
                 .extract()
                 .as(Expense.class);
@@ -137,7 +137,7 @@ public class ManagerExpenseAPITest {
         employeeRequests.clearAll(); // delete the submitted expense
         String response = given()
                 .when()
-                .get("/" + deletedExpense.getId())
+                .get("/expenses/" + deletedExpense.getId())
                 .then()
                 .statusCode(200)
                 .extract().asString();
@@ -158,19 +158,19 @@ public class ManagerExpenseAPITest {
 
         List<Expense> pendingExpenses = given()
                 .when()
-                .get("/status/pending")
+                .get("/expenses/status/pending")
                 .then()
                 .statusCode(200)
                 .extract().response().jsonPath().getList("$", Expense.class);
         List<Expense> approvedExpenses = given()
                 .when()
-                .get("/status/approved")
+                .get("/expenses/status/approved")
                 .then()
                 .statusCode(200)
                 .extract().response().jsonPath().getList("$", Expense.class);
         List<Expense> deniedExpenses = given()
                 .when()
-                .get("/status/denied")
+                .get("/expenses/status/denied")
                 .then()
                 .statusCode(200)
                 .extract().response().jsonPath().getList("$", Expense.class);
@@ -195,12 +195,12 @@ public class ManagerExpenseAPITest {
         );
         given()
                 .when()
-                .get("/" + expectedExpense.getId())
+                .get("/expenses/" + expectedExpense.getId())
                 .then()
                 .statusCode(200);
         List<Expense> returnedList = given()
                 .when()
-                .get("/user/" + TEST_EMPLOYEE.getId())
+                .get("/expenses/user/" + TEST_EMPLOYEE.getId())
                 .then()
                 .extract().response().jsonPath().getList("$", Expense.class);
         assertNotNull(returnedList, "Should be able to retrieve expense by userId");
@@ -216,13 +216,13 @@ public class ManagerExpenseAPITest {
         );
         given()
                 .when()
-                .get("/" + expectedExpense.getId())
+                .get("/expenses/" + expectedExpense.getId())
                 .then()
                 .extract()
                 .as(Expense.class);
         List<Expense> returnedList = given()
                 .when()
-                .get("/date/2026-07-24")
+                .get("/expenses/date/2026-07-24")
                 .then()
                 .extract().response().jsonPath().getList("$", Expense.class);
         assertNotNull(returnedList, "Should be able to retrieve expense by userId");
