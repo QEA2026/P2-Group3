@@ -4,8 +4,10 @@ import sys
 import time
 
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 
-BASE_URL = "http://localhost:5173"
+BASE_URL = os.environ.get("BASE_URL", "http://localhost:5173")
+SELENIUM_URL = os.environ.get("SELENIUM_URL")
 SLOW_MO = float(os.environ.get("SLOW_MO", "0"))
 
 FEATURES_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -17,7 +19,18 @@ DB_FILE = os.path.join(REPO_ROOT, "expenses_system_db.db")
 
 def before_all(context):
     context.base_url = BASE_URL
-    context.driver = webdriver.Chrome()
+
+    options = Options()
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+
+    if SELENIUM_URL:
+        context.driver = webdriver.Remote(
+            command_executor=SELENIUM_URL,
+            options=options
+        )
+    else:
+        context.driver = webdriver.Chrome(options=options)
     context.driver.implicitly_wait(5)
 
 
