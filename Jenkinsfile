@@ -48,22 +48,45 @@ pipeline {
         //     }
         // }
 
-        stage('Tests') {
+        stage('Manager Backend Unit Tests') {
             steps {
-                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-                    sh 'docker compose exec -T employee-backend pytest'
-                }
-
-                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-                    sh 'docker compose exec -T -w /employee_app/e2e employee-backend behave'
-                }
-
-                sh 'echo "Manager Backend Unit Tests"'
                 catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
                     sh 'docker compose exec -T manager-backend mvn test -f /manager_app/pom.xml -Dtest="com.expense.manager.unit.*.*Test"'
                 }
             }
+
         }
+
+        stage('Employee Backend Unit Tests') {
+            steps {
+                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                    sh 'docker compose exec -T employee-backend pytest'
+                }
+            }
+        }
+
+        stage('Employee Behave Tests') {
+            steps {
+                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                    sh 'docker compose exec -T -w /employee_app/e2e employee-backend behave'
+                }
+            }
+
+        }
+
+        stage('Manager Selenium Tests') {
+            steps {
+                sh 'echo "Selenium tests not implemented yet..."'
+            }
+        }
+
+        stage('API Tests') {
+            steps {
+                sh 'echo "API tests not implemented yet..."'
+            }
+        }
+
+
     }
 
     post {
