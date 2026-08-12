@@ -60,7 +60,7 @@ pipeline {
 
                 sh 'echo "Manager Backend Unit Tests"'
                 catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-                    sh 'docker compose exec -T manager-backend mvn test -f /pom.xml -Dtest="com.expense.manager.unit.*.*Test"'
+                    sh 'docker compose exec -T manager-backend mvn test -f /manager_app/pom.xml -Dtest="com.expense.manager.unit.*.*Test"'
                 }
             }
         }
